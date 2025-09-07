@@ -31,3 +31,4 @@ class FilmListSerializer(serializers.ModelSerializer):
 
     def get_genres(self, film):
         return [i.name for i in film.genres.all()]
+

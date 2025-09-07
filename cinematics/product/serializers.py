@@ -17,9 +17,14 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CategoryListSerializer(serializers.ModelSerializer):
+    products_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = 'name'.split()
+        fields = 'name products_count'.split()
+
+    def get_products_count(self, obj):
+        return obj.product_set.count()
         
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,4 +34,5 @@ class ProductListSerializer(serializers.ModelSerializer):
 class ReviewListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = 'text'.split()
+        fields = 'text stars'.split()
+

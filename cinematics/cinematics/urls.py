@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from product import views
+# from films import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +26,9 @@ urlpatterns = [
     path('api/v1/categories/<int:id>/', views.category_detail),
     path('api/v1/products/', views.shop_product),
     path('api/v1/products/<int:id>/', views.product_detail),
-    path('api/v1/reviews/', views.review),
-    path('api/v1/reviews/<int:id>/', views.review_detail)
+    path('api/v1/products/reviews/', views.review),
+    path('api/v1/reviews/<int:id>/', views.review_detail),
+    path('api/v1/products/rating', views.product_rating)
+    # path('api/v1/films/', views.film_list_api_view),
+    # path('api/v1/films/<int:id>/', views.film_details),
 ]

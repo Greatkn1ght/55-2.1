@@ -8,7 +8,7 @@ from .serializers import FilmListSerializer, FilmDetailSerializer
 # Create your views here.
 
 @api_view(['GET'])
-def film_details(reques, id):
+def film_details(request, id):
     try:
         film = Film.objects.get(id=id)
     except Film.DoesNotExist:
@@ -18,7 +18,7 @@ def film_details(reques, id):
 
 @api_view(http_method_names=['GET'])
 def film_list_api_view(request):
-    films = Film.objects.all()
+    films = Film.objects.select_related('director').prefetch_related('reviews', 'genres').all()
     data = FilmListSerializer(films, many=True).data
     return Response(
         data = data,

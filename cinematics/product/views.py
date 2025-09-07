@@ -6,6 +6,7 @@ from .models import Category, Product, Review
 from django.forms import model_to_dict
 from .serializers import CategoryListSerializer, ProductListSerializer, ReviewListSerializer
 from .serializers import CategoryDetailSerializer, ProductDetailSerializer, ReviewDetailSerializer
+from django.db.models import Avg
 # Create your views here.
 
 @api_view(['GET'])
@@ -52,3 +53,8 @@ def review_detail(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND, data={'Error': 'Review not found!'})
     data =  ReviewDetailSerializer(review_details, many=False).data
     return Response(data=data)
+
+@api_view(['GET'])
+def product_rating(request):
+    rating = Review.objects.aggregate(Avg('stars'))['stars__avg']
+    return Response({'average_rating': round(rating, 1) if rating else None})
