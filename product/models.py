@@ -26,4 +26,4 @@ class Review(models.Model):
 
     def __str__(self):
         avg = Review.objects.aggregate(Avg('stars'))['stars__avg']
-        return f"{self.text} Average rating: {avg:.1f}"
+        return f"{self.text} {self.product} Average rating: {avg:.1f}"
