@@ -30,5 +30,6 @@ urlpatterns = [
     # path('api/v1/reviews/<int:id>/', views.review_detail),
     # path('api/v1/products/rating/', views.product_rating)
     path('api/v1/films/', include('films.urls')),
-    path('api/v1/users/', include('users.urls'))
+    path('api/v1/users/', include('users.urls')),
+    path('api/v1/products/', include('product.urls'))
 ]
