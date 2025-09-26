@@ -2,10 +2,23 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Film
+from .models import Film, Genre
 from django.forms import model_to_dict
-from .serializers import (FilmListSerializer, FilmDetailSerializer, FilmValidateSerializer)
+from .serializers import (FilmListSerializer, 
+                          FilmDetailSerializer, 
+                          FilmValidateSerializer,
+                          GenreSerializer)
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 # Create your views here.
+
+class GenreListAPIView(ListCreateAPIView):
+    queryset = Genre.objects.all() # List of objects from DB
+    serializer_class = GenreSerializer # Class serializer inherited by ModelSerializer
+
+class GenreDetailAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = Genre.objects.all() 
+    serializer_class = GenreSerializer
+    lookup_field = 'id'
 
 @api_view(['GET', 'PUT', 'DELETE']) # GET -> retrieve, PUT -> update, DELETE -> destroy
 def film_details(request, id):
@@ -38,6 +51,7 @@ def film_details(request, id):
     
 @api_view(http_method_names=['GET', 'POST'])
 def film_list_create_api_view(request):
+    print(request.user)
     if request.method == 'GET':
         films = Film.objects.select_related('director').prefetch_related('reviews', 'genres').all()
         data = FilmListSerializer(films, many=True).data

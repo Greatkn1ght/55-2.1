@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from .models import Film, Director, Review
+from .models import Film, Director, Review, Genre
 from rest_framework.exceptions import ValidationError
 
+class GenreSerializer(serializers.Serializer):
+    class Meta:
+        model = Genre
+        fields = '__all__'
+        
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
