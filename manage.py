@@ -5,6 +5,7 @@ import sys
 
 
 def main():
+    dotenv.read_dotenv()
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cinematics.settings')
     try:

@@ -33,3 +33,4 @@ urlpatterns = [
     path('api/v1/users/', include('users.urls')),
     path('api/v1/products/', include('product.urls'))
 ]
+urlpatterns += swagger.urlpatterns
